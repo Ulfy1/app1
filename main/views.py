@@ -6,4 +6,4 @@ def index(request):
     return render(request, 'main/index.html')
 
 def about(request):
-    return HttpResponse("Home Page")
+    return render(request, 'main/about.html')
