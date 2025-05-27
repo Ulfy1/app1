@@ -373,8 +373,8 @@ Catalog
                     <div class="product-box">
                       <div class="product-thumb">
                         <span class="product-label">New Season</span>
-                        {% if product.image %}
-                          <img src="{{ product.image.url }}" alt="Product Image" class="main-img" loading="lazy">
+                        {% if product.first_image %}
+                          <img src="{{ product.first_image.image.url }}" alt="Product Image" class="main-img" loading="lazy">
                         {% endif %}
                         <div class="product-overlay">
                           <div class="product-quick-actions">
@@ -395,10 +395,17 @@ Catalog
                       </div>
                       <div class="product-content">
                         <div class="product-details">
-                          <h3 class="product-title"><a href="product-details.html">{{product.name}}</a></h3>
+                          <h3 class="product-title"><a href="{% url "catalog:product" product.slug %}">{{product.name}}</a></h3>
                           <div class="product-price">
+                          {% if product.discount %}
+                            <div class="product-price">
+                              <span class="original">${{ product.price }}</span>
+                              <span class="sale">${{ product.sell_price }}</span>
+                            </div>
+                          {% else %}
                             <span>${{product.price}}</span>
-                          </div>
+                          {% endif %}
+                        </div>
                         </div>
                         <div class="product-rating-container">
                           <div class="rating-stars">
