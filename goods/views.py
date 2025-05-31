@@ -3,10 +3,14 @@ from django.shortcuts import render
 from goods.models import Categories, Products
 
 # Create your views here.
-def catalog(request):
+def catalog(request, category_slug):
 
     categories = Categories.objects.all()
-    products = Products.objects.all()
+
+    if category_slug == 'all':
+        products = Products.objects.all()
+    else:
+        products = Products.objects.filter(category__slug = category_slug)
 
     context = {
         'categories': categories,

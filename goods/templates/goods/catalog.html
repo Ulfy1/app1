@@ -20,9 +20,11 @@ Catalog
 
               <ul class="category-tree list-unstyled mb-0">
                 {% for category in categories %}
-                  <li class="category-item">
-                    <div class="d-flex justify-content-between align-items-center category-header collapsed" data-bs-toggle="collapse" data-bs-target="#categories-1-clothing-subcategories" aria-expanded="false" aria-controls="categories-1-clothing-subcategories">
-                      <a href="javascript:void(0)" class="category-link">{{category.name}}</a>
+                    <li class="category-item">
+                        <div class="d-flex justify-content-between align-items-center category-header">
+                            <a href="{% url 'catalog:index' category.slug %}" class="category-link">{{ category.name }}</a>
+                        </div>
+                    </li>
                 {% endfor %}
               </ul>
 
