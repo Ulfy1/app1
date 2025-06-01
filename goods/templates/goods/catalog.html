@@ -1,5 +1,6 @@
 {% extends "main/base.html" %}
 {% load static %}
+{% load goods_tags %}
 
 {% block title %}
 Catalog
@@ -35,233 +36,46 @@ Catalog
 
               <h3 class="widget-title">Price Range</h3>
 
-              <div class="price-range-container">
-                <div class="current-range mb-3">
-                  <span class="min-price">$0</span>
-                  <span class="max-price float-end">$1000</span>
-                </div>
+                <form method="get" action="{% url "catalog:index" slug_url %}" >
+                  <div class="price-range-container">
+                  <div class="current-range mb-3">
+                    <span class="min-price">$0</span>
+                    <span class="max-price float-end">$1000</span>
+                  </div>
 
-                <div class="range-slider">
-                  <div class="slider-track"></div>
-                  <div class="slider-progress"></div>
-                  <input type="range" class="min-range" min="0" max="1000" value="0" step="10">
-                  <input type="range" class="max-range" min="0" max="1000" value="500" step="10">
-                </div>
+                  <div class="range-slider">
+                    <div class="slider-track"></div>
+                    <div class="slider-progress"></div>
+                    <input type="range" class="min-range" min="0" max="1000" value="{% if request.GET.min_price %}{{ request.GET.min_price }}{% else %}0{% endif %}" step="10">
+                    <input type="range" class="max-range" min="0" max="1000" value="{% if request.GET.max_price %}{{ request.GET.max_price }}{% else %}1000{% endif %}" step="10">
+                  </div>
 
-                <div class="price-inputs mt-3">
-                  <div class="row g-2">
-                    <div class="col-6">
-                      <div class="input-group input-group-sm">
-                        <span class="input-group-text">$</span>
-                        <input type="number" class="form-control min-price-input" placeholder="Min" min="0" max="1000" value="0" step="10">
+                  <div class="price-inputs mt-3">
+                    <div class="row g-2">
+                      <div class="col-6">
+                        <div class="input-group input-group-sm">
+                          <span class="input-group-text">$</span>
+                          <input type="number" class="form-control min-price-input" name="min_price" placeholder="Min" min="0" max="1000" value="{% if request.GET.min_price %}{{ request.GET.min_price }}{% else %}0{% endif %}" step="10">
+                        </div>
                       </div>
-                    </div>
-                    <div class="col-6">
-                      <div class="input-group input-group-sm">
-                        <span class="input-group-text">$</span>
-                        <input type="number" class="form-control max-price-input" placeholder="Max" min="0" max="1000" value="500" step="10">
+                      <div class="col-6">
+                        <div class="input-group input-group-sm">
+                          <span class="input-group-text">$</span>
+                          <input type="number" class="form-control max-price-input" name="max_price" placeholder="Max" min="0" max="1000" value="{% if request.GET.max_price %}{{ request.GET.max_price }}{% else %}1000{% endif %}" step="10">
+                        </div>
                       </div>
                     </div>
                   </div>
-                </div>
 
-                <div class="filter-actions mt-3">
-                  <button type="button" class="btn btn-sm btn-primary w-100">Apply Filter</button>
+                  <div class="filter-actions mt-3">
+                    <button type="submit" class="btn btn-sm btn-primary w-100">Apply Filter</button>
                 </div>
+              </form>
               </div>
 
             </div><!--/Pricing Range Widget -->
 
-            <!-- Brand Filter Widget -->
-            <h3 class="brand-filter-widget widget-item">Filter by Brand</h3><!--/Brand Filter Widget -->
-
-            <!-- Color Filter Widget -->
-            <div class="color-filter-widget widget-item">
-
-              <h3 class="widget-title">Filter by Color</h3>
-
-              <div class="color-filter-content">
-                <div class="color-options">
-                  <div class="form-check color-option">
-                    <input class="form-check-input" type="checkbox" value="black" id="color-black">
-                    <label class="form-check-label" for="color-black">
-                      <span class="color-swatch" style="background-color: #000000;" title="Black"></span>
-                    </label>
-                  </div>
-
-                  <div class="form-check color-option">
-                    <input class="form-check-input" type="checkbox" value="white" id="color-white">
-                    <label class="form-check-label" for="color-white">
-                      <span class="color-swatch" style="background-color: #ffffff;" title="White"></span>
-                    </label>
-                  </div>
-
-                  <div class="form-check color-option">
-                    <input class="form-check-input" type="checkbox" value="red" id="color-red">
-                    <label class="form-check-label" for="color-red">
-                      <span class="color-swatch" style="background-color: #e74c3c;" title="Red"></span>
-                    </label>
-                  </div>
-
-                  <div class="form-check color-option">
-                    <input class="form-check-input" type="checkbox" value="blue" id="color-blue">
-                    <label class="form-check-label" for="color-blue">
-                      <span class="color-swatch" style="background-color: #3498db;" title="Blue"></span>
-                    </label>
-                  </div>
-
-                  <div class="form-check color-option">
-                    <input class="form-check-input" type="checkbox" value="green" id="color-green">
-                    <label class="form-check-label" for="color-green">
-                      <span class="color-swatch" style="background-color: #2ecc71;" title="Green"></span>
-                    </label>
-                  </div>
-
-                  <div class="form-check color-option">
-                    <input class="form-check-input" type="checkbox" value="yellow" id="color-yellow">
-                    <label class="form-check-label" for="color-yellow">
-                      <span class="color-swatch" style="background-color: #f1c40f;" title="Yellow"></span>
-                    </label>
-                  </div>
-
-                  <div class="form-check color-option">
-                    <input class="form-check-input" type="checkbox" value="purple" id="color-purple">
-                    <label class="form-check-label" for="color-purple">
-                      <span class="color-swatch" style="background-color: #9b59b6;" title="Purple"></span>
-                    </label>
-                  </div>
-
-                  <div class="form-check color-option">
-                    <input class="form-check-input" type="checkbox" value="orange" id="color-orange">
-                    <label class="form-check-label" for="color-orange">
-                      <span class="color-swatch" style="background-color: #e67e22;" title="Orange"></span>
-                    </label>
-                  </div>
-
-                  <div class="form-check color-option">
-                    <input class="form-check-input" type="checkbox" value="pink" id="color-pink">
-                    <label class="form-check-label" for="color-pink">
-                      <span class="color-swatch" style="background-color: #fd79a8;" title="Pink"></span>
-                    </label>
-                  </div>
-
-                  <div class="form-check color-option">
-                    <input class="form-check-input" type="checkbox" value="brown" id="color-brown">
-                    <label class="form-check-label" for="color-brown">
-                      <span class="color-swatch" style="background-color: #795548;" title="Brown"></span>
-                    </label>
-                  </div>
-                </div>
-
-                <div class="filter-actions mt-3">
-                  <button type="button" class="btn btn-sm btn-outline-secondary">Clear All</button>
-                  <button type="button" class="btn btn-sm btn-primary">Apply Filter</button>
-                </div>
-              </div>
-
-            </div><!--/Color Filter Widget -->
-
-            <!-- Brand Filter Widget -->
-            <div class="brand-filter-widget widget-item">
-
-              <h3 class="widget-title">Filter by Brand</h3>
-
-              <div class="brand-filter-content">
-                <div class="brand-search">
-                  <input type="text" class="form-control" placeholder="Search brands...">
-                  <i class="bi bi-search"></i>
-                </div>
-
-                <div class="brand-list">
-                  <div class="brand-item">
-                    <div class="form-check">
-                      <input class="form-check-input" type="checkbox" id="brand1">
-                      <label class="form-check-label" for="brand1">
-                        Nike
-                        <span class="brand-count">(24)</span>
-                      </label>
-                    </div>
-                  </div>
-
-                  <div class="brand-item">
-                    <div class="form-check">
-                      <input class="form-check-input" type="checkbox" id="brand2">
-                      <label class="form-check-label" for="brand2">
-                        Adidas
-                        <span class="brand-count">(18)</span>
-                      </label>
-                    </div>
-                  </div>
-
-                  <div class="brand-item">
-                    <div class="form-check">
-                      <input class="form-check-input" type="checkbox" id="brand3">
-                      <label class="form-check-label" for="brand3">
-                        Puma
-                        <span class="brand-count">(12)</span>
-                      </label>
-                    </div>
-                  </div>
-
-                  <div class="brand-item">
-                    <div class="form-check">
-                      <input class="form-check-input" type="checkbox" id="brand4">
-                      <label class="form-check-label" for="brand4">
-                        Reebok
-                        <span class="brand-count">(9)</span>
-                      </label>
-                    </div>
-                  </div>
-
-                  <div class="brand-item">
-                    <div class="form-check">
-                      <input class="form-check-input" type="checkbox" id="brand5">
-                      <label class="form-check-label" for="brand5">
-                        Under Armour
-                        <span class="brand-count">(7)</span>
-                      </label>
-                    </div>
-                  </div>
-
-                  <div class="brand-item">
-                    <div class="form-check">
-                      <input class="form-check-input" type="checkbox" id="brand6">
-                      <label class="form-check-label" for="brand6">
-                        New Balance
-                        <span class="brand-count">(6)</span>
-                      </label>
-                    </div>
-                  </div>
-
-                  <div class="brand-item">
-                    <div class="form-check">
-                      <input class="form-check-input" type="checkbox" id="brand7">
-                      <label class="form-check-label" for="brand7">
-                        Converse
-                        <span class="brand-count">(5)</span>
-                      </label>
-                    </div>
-                  </div>
-
-                  <div class="brand-item">
-                    <div class="form-check">
-                      <input class="form-check-input" type="checkbox" id="brand8">
-                      <label class="form-check-label" for="brand8">
-                        Vans
-                        <span class="brand-count">(4)</span>
-                      </label>
-                    </div>
-                  </div>
-                </div>
-
-                <div class="brand-actions">
-                  <button class="btn btn-sm btn-outline-primary">Apply Filter</button>
-                  <button class="btn btn-sm btn-link">Clear All</button>
-                </div>
-              </div>
-
-            </div><!--/Brand Filter Widget -->
-
+        
           </div>
 
         </div>
@@ -339,23 +153,29 @@ Catalog
                     </div>
                   </div>
                 </div>
-
+                
+                {% if slug_url and slug_url != 'all' %}
                 <div class="row mt-3">
                   <div class="col-12" data-aos="fade-up" data-aos-delay="200">
                     <div class="active-filters">
+                      
                       <span class="active-filter-label">Active Filters:</span>
                       <div class="filter-tags">
+                        
+                        
                         <span class="filter-tag">
-                          Electronics <button class="filter-remove"><i class="bi bi-x"></i></button>
+                          {{ slug_url|title }} <button class="filter-remove"><i class="bi bi-x"></i></button>
                         </span>
-                        <span class="filter-tag">
+                      
+                        {% comment %} <span class="filter-tag">
                           $50 to $100 <button class="filter-remove"><i class="bi bi-x"></i></button>
-                        </span>
+                        </span> {% endcomment %}
                         <button class="clear-all-btn">Clear All</button>
                       </div>
                     </div>
                   </div>
                 </div>
+                {% endif %} 
 
               </div>
 
@@ -428,259 +248,7 @@ Catalog
                     </div>
                   </div>
                  {% endfor %}
-                <!-- End Product 1 -->
 
-                {% comment %} <!-- Product 2 -->
-                <div class="col-lg-6">
-                  <div class="product-box">
-                    <div class="product-thumb">
-                      <span class="product-label product-label-sale">-30%</span>
-                      <img src="{% static "assets/img/product/product-6.webp"%}" alt="Product Image" class="main-img" loading="lazy">
-                      <div class="product-overlay">
-                        <div class="product-quick-actions">
-                          <button type="button" class="quick-action-btn">
-                            <i class="bi bi-heart"></i>
-                          </button>
-                          <button type="button" class="quick-action-btn">
-                            <i class="bi bi-arrow-repeat"></i>
-                          </button>
-                          <button type="button" class="quick-action-btn">
-                            <i class="bi bi-eye"></i>
-                          </button>
-                        </div>
-                        <div class="add-to-cart-container">
-                          <button type="button" class="add-to-cart-btn">Add to Cart</button>
-                        </div>
-                      </div>
-                    </div>
-                    <div class="product-content">
-                      <div class="product-details">
-                        <h3 class="product-title"><a href="product-details.html">Aliquam tincidunt mauris eu risus</a></h3>
-                        <div class="product-price">
-                          <span class="original">$199.99</span>
-                          <span class="sale">$139.99</span>
-                        </div>
-                      </div>
-                      <div class="product-rating-container">
-                        <div class="rating-stars">
-                          <i class="bi bi-star-fill"></i>
-                          <i class="bi bi-star-fill"></i>
-                          <i class="bi bi-star-fill"></i>
-                          <i class="bi bi-star-fill"></i>
-                          <i class="bi bi-star-half"></i>
-                        </div>
-                        <span class="rating-number">4.5</span>
-                      </div>
-                      <div class="product-color-options">
-                        <span class="color-option" style="background-color: #0ea5e9;"></span>
-                        <span class="color-option active" style="background-color: #111827;"></span>
-                        <span class="color-option" style="background-color: #a855f7;"></span>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <!-- End Product 2 -->
-
-                <!-- Product 3 -->
-                <div class="col-lg-6">
-                  <div class="product-box">
-                    <div class="product-thumb">
-                      <img src="{% static "assets/img/product/product-9.webp"%}" alt="Product Image" class="main-img" loading="lazy">
-                      <div class="product-overlay">
-                        <div class="product-quick-actions">
-                          <button type="button" class="quick-action-btn">
-                            <i class="bi bi-heart"></i>
-                          </button>
-                          <button type="button" class="quick-action-btn">
-                            <i class="bi bi-arrow-repeat"></i>
-                          </button>
-                          <button type="button" class="quick-action-btn">
-                            <i class="bi bi-eye"></i>
-                          </button>
-                        </div>
-                        <div class="add-to-cart-container">
-                          <button type="button" class="add-to-cart-btn">Add to Cart</button>
-                        </div>
-                      </div>
-                    </div>
-                    <div class="product-content">
-                      <div class="product-details">
-                        <h3 class="product-title"><a href="product-details.html">Cras ornare tristique elit</a></h3>
-                        <div class="product-price">
-                          <span>$89.50</span>
-                        </div>
-                      </div>
-                      <div class="product-rating-container">
-                        <div class="rating-stars">
-                          <i class="bi bi-star-fill"></i>
-                          <i class="bi bi-star-fill"></i>
-                          <i class="bi bi-star-fill"></i>
-                          <i class="bi bi-star"></i>
-                          <i class="bi bi-star"></i>
-                        </div>
-                        <span class="rating-number">3.0</span>
-                      </div>
-                      <div class="product-color-options">
-                        <span class="color-option active" style="background-color: #ef4444;"></span>
-                        <span class="color-option" style="background-color: #64748b;"></span>
-                        <span class="color-option" style="background-color: #eab308;"></span>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <!-- End Product 3 -->
-
-                <!-- Product 4 -->
-                <div class="col-lg-6">
-                  <div class="product-box">
-                    <div class="product-thumb">
-                      <img src="{% static "assets/img/product/product-11.webp"%}" alt="Product Image" class="main-img" loading="lazy">
-                      <div class="product-overlay">
-                        <div class="product-quick-actions">
-                          <button type="button" class="quick-action-btn">
-                            <i class="bi bi-heart"></i>
-                          </button>
-                          <button type="button" class="quick-action-btn">
-                            <i class="bi bi-arrow-repeat"></i>
-                          </button>
-                          <button type="button" class="quick-action-btn">
-                            <i class="bi bi-eye"></i>
-                          </button>
-                        </div>
-                        <div class="add-to-cart-container">
-                          <button type="button" class="add-to-cart-btn">Add to Cart</button>
-                        </div>
-                      </div>
-                    </div>
-                    <div class="product-content">
-                      <div class="product-details">
-                        <h3 class="product-title"><a href="product-details.html">Integer vitae libero ac risus</a></h3>
-                        <div class="product-price">
-                          <span>$119.00</span>
-                        </div>
-                      </div>
-                      <div class="product-rating-container">
-                        <div class="rating-stars">
-                          <i class="bi bi-star-fill"></i>
-                          <i class="bi bi-star-fill"></i>
-                          <i class="bi bi-star-fill"></i>
-                          <i class="bi bi-star-fill"></i>
-                          <i class="bi bi-star-fill"></i>
-                        </div>
-                        <span class="rating-number">5.0</span>
-                      </div>
-                      <div class="product-color-options">
-                        <span class="color-option" style="background-color: #10b981;"></span>
-                        <span class="color-option active" style="background-color: #8b5cf6;"></span>
-                        <span class="color-option" style="background-color: #ec4899;"></span>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <!-- End Product 4 -->
-
-                <!-- Product 5 -->
-                <div class="col-lg-6">
-                  <div class="product-box">
-                    <div class="product-thumb">
-                      <span class="product-label product-label-sold">Sold Out</span>
-                      <img src="{% static "assets/img/product/product-2.webp" alt="Product Image"%}" class="main-img" loading="lazy">
-                      <div class="product-overlay">
-                        <div class="product-quick-actions">
-                          <button type="button" class="quick-action-btn">
-                            <i class="bi bi-heart"></i>
-                          </button>
-                          <button type="button" class="quick-action-btn">
-                            <i class="bi bi-arrow-repeat"></i>
-                          </button>
-                          <button type="button" class="quick-action-btn">
-                            <i class="bi bi-eye"></i>
-                          </button>
-                        </div>
-                        <div class="add-to-cart-container">
-                          <button type="button" class="add-to-cart-btn disabled">Sold Out</button>
-                        </div>
-                      </div>
-                    </div>
-                    <div class="product-content">
-                      <div class="product-details">
-                        <h3 class="product-title"><a href="product-details.html">Donec eu libero sit amet quam</a></h3>
-                        <div class="product-price">
-                          <span>$75.00</span>
-                        </div>
-                      </div>
-                      <div class="product-rating-container">
-                        <div class="rating-stars">
-                          <i class="bi bi-star-fill"></i>
-                          <i class="bi bi-star-fill"></i>
-                          <i class="bi bi-star-fill"></i>
-                          <i class="bi bi-star-fill"></i>
-                          <i class="bi bi-star-half"></i>
-                        </div>
-                        <span class="rating-number">4.7</span>
-                      </div>
-                      <div class="product-color-options">
-                        <span class="color-option active" style="background-color: #4b5563;"></span>
-                        <span class="color-option" style="background-color: #e11d48;"></span>
-                        <span class="color-option" style="background-color: #4f46e5;"></span>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <!-- End Product 5 -->
-
-                <!-- Product 6 -->
-                <div class="col-lg-6">
-                  <div class="product-box">
-                    <div class="product-thumb">
-                      <span class="product-label product-label-hot">Hot</span>
-                      <img src="{% static "assets/img/product/product-12.webp" alt="Product Image"%}" class="main-img" loading="lazy">
-                      <div class="product-overlay">
-                        <div class="product-quick-actions">
-                          <button type="button" class="quick-action-btn">
-                            <i class="bi bi-heart"></i>
-                          </button>
-                          <button type="button" class="quick-action-btn">
-                            <i class="bi bi-arrow-repeat"></i>
-                          </button>
-                          <button type="button" class="quick-action-btn">
-                            <i class="bi bi-eye"></i>
-                          </button>
-                        </div>
-                        <div class="add-to-cart-container">
-                          <button type="button" class="add-to-cart-btn">Add to Cart</button>
-                        </div>
-                      </div>
-                    </div>
-                    <div class="product-content">
-                      <div class="product-details">
-                        <h3 class="product-title"><a href="product-details.html">Pellentesque habitant morbi tristique</a></h3>
-                        <div class="product-price">
-                          <span>$64.95</span>
-                        </div>
-                      </div>
-                      <div class="product-rating-container">
-                        <div class="rating-stars">
-                          <i class="bi bi-star-fill"></i>
-                          <i class="bi bi-star-fill"></i>
-                          <i class="bi bi-star-fill"></i>
-                          <i class="bi bi-star-half"></i>
-                          <i class="bi bi-star"></i>
-                        </div>
-                        <span class="rating-number">3.6</span>
-                      </div>
-                      <div class="product-color-options">
-                        <span class="color-option" style="background-color: #eab308;"></span>
-                        <span class="color-option" style="background-color: #14b8a6;"></span>
-                        <span class="color-option active" style="background-color: #facc15;"></span>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <!-- End Product 6 -->
-              </div>
-
-            </div> {% endcomment %}
 
           </section><!-- /Category Product List Section -->
 
@@ -690,23 +258,35 @@ Catalog
             <div class="container">
               <nav class="d-flex justify-content-center" aria-label="Page navigation">
                 <ul>
-                  <li>
-                    <a href="#" aria-label="Previous page">
+                  {% if not products.has_previous %}
+                    <li class="page-item disabled">
+                      <a class="page-link" href="" tabindex="-1" aria-disabled="true" aria-label="Previous page">
+                  {% else %}
+                    <li>
+                    <a href="?{% change_params page=products.previous_page_number %}"  aria-label="Previous page">
+                  {% endif %}
                       <i class="bi bi-arrow-left"></i>
                       <span class="d-none d-sm-inline">Previous</span>
                     </a>
                   </li>
 
-                  <li><a href="#" class="active">1</a></li>
-                  <li><a href="#">2</a></li>
-                  <li><a href="#">3</a></li>
-                  <li class="ellipsis">...</li>
-                  <li><a href="#">8</a></li>
-                  <li><a href="#">9</a></li>
-                  <li><a href="#">10</a></li>
 
+
+                  {% for page in products.paginator.page_range %}
+                    {% if page >= products.number|add:-2 and page <= products.number|add:2 %}
+                      <li class="active"><a href="?{% change_params page=page %}">{{ page }}</a></li>
+                    {% endif %}
+                  {% endfor %}
+
+
+
+                  {% if not products.has_next %}
+                    <li class="page-item disabled">
+                      <a class="page-link" href="#" tabindex="-1" aria-disabled="true" aria-label="Next page">
+                  {% else %}
                   <li>
-                    <a href="#" aria-label="Next page">
+                    <a href="?{% change_params page=products.next_page_number %}" aria-label="Next page">
+                  {% endif %}
                       <span class="d-none d-sm-inline">Next</span>
                       <i class="bi bi-arrow-right"></i>
                     </a>
